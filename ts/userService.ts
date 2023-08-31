@@ -1,4 +1,4 @@
-export {};
+// export {};
 // const userDal = require("./userDal");
 import {readData, writeData}  from "./userDal"
 import { dataInterFace } from "./userDal";
@@ -14,29 +14,47 @@ export const getAllItemsService = async ():Promise<dataInterFace|unknown> => {
   }return console.error();
   
 };
- export const getItemByIdService = async (id:string) => {
-      const data:dataInterFace[] = await readData();
+ export const getItemByIdService = async (id:string):Promise<any> => { 
+      const data1 : dataInterFace[] = await readData()
       let result:dataInterFace|undefined
-        data.forEach((element:dataInterFace):void=>{
+        data1.forEach((element)=>{
             if(element.id===Number(id)){
             result=element}
-        })
-        if (result!==undefined){
-            return result
+        }
+        )
+        if (result===undefined){
+            throw Error   
         }else{
-            return null
+            return result
         }
     }
-export const newItemOfService = async (item:dataInterFace):Promise<dataInterFace|undefined> => {
-      const data:dataInterFace[] = await readData();
-      let id=item.id
-      let filterData:dataInterFace[]=data.forEach(element:any) => {
-        if
-        
-      });
-      filterData.push(item)
-      const writeData1=await writeData(filterData)
-      return data;
+export const newItemOfService = async (item:dataInterFace)
+  :Promise<any|string> => {
+      const data1:dataInterFace[] = await readData();
+      let newId:number=0
+      data1.forEach((element):void=>{
+        if(element.id>newId){
+        newId=element.id
+        }
+      })
+      item.id=newId+1
+      data1.push(item)
+      const writeData1:any|string=await writeData(data1)
+      return writeData;
     }
-  };
+export const updateItemOfService=async(id:string,body:dataInterFace):Promise<string|undefined>=>{
+  const data1:dataInterFace[] = await readData();
+  const filterdData=data1.filter((el)=>el.id!==Number(id))
+  filterdData.push(body)
+  let result:string|undefined=await writeData(filterdData)
+  return 
+}
+export const deleteProuduct=async(id:string):Promise<string|undefined>=>{
+  const data1:dataInterFace[] = await readData();
+  const filterdData=data1.filter((element)=>element.id!==Number(id))
+  await writeData(filterdData)
+  return 
+}
+  
+
 
