@@ -51,22 +51,47 @@ const newItemOfService = (item) => __awaiter(void 0, void 0, void 0, function* (
     });
     item.id = newId + 1;
     data1.push(item);
-    const writeData1 = yield (0, userDal_1.writeData)(data1);
+    const writeData1 = yield (0, userDal_1.writeData)(item);
     return userDal_1.writeData;
 });
 exports.newItemOfService = newItemOfService;
+// export const newItemOfService = async (item:dataInterFace)
+//   :Promise<any|string> => {
+//       const data1:dataInterFace[] = await readData();
+//       let newId:number=0
+//       data1.forEach((element):void=>{
+//         if(element.id>newId){
+//         newId=element.id
+//         }
+//       })
+//       item.id=newId+1
+//       data1.push(item)
+//       const writeData1:any|string=await writeData(data1)
+//       return writeData;
+//     }
+// export const updateItemOfService=async(id:string,body:dataInterFace):Promise<string|undefined>=>{
+//   const data1:dataInterFace[] = await readData();
+//   const filterdData=data1.filter((el)=>el.id!==Number(id))
+//   filterdData.push(body)
+//   let result:string|undefined=await writeData(filterdData)
+//   return 
+// }
+// export const deleteProuduct=async(id:string):Promise<string|undefined>=>{
+//   const data1:dataInterFace[] = await readData();
+//   const filterdData=data1.filter((element)=>element.id!==Number(id))
+//   await writeData(filterdData)
+//   return 
+// }
+// mongo
 const updateItemOfService = (id, body) => __awaiter(void 0, void 0, void 0, function* () {
-    const data1 = yield (0, userDal_1.readData)();
-    const filterdData = data1.filter((el) => el.id !== Number(id));
-    filterdData.push(body);
-    let result = yield (0, userDal_1.writeData)(filterdData);
-    return;
+    let numberid = Number(id);
+    let result = yield (0, userDal_1.updateItem)(numberid, body);
+    return result;
 });
 exports.updateItemOfService = updateItemOfService;
 const deleteProuduct = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const data1 = yield (0, userDal_1.readData)();
-    const filterdData = data1.filter((element) => element.id !== Number(id));
-    yield (0, userDal_1.writeData)(filterdData);
-    return;
+    let numberid = Number(id);
+    let result = yield (0, userDal_1.deleteItem)(numberid);
+    return result;
 });
 exports.deleteProuduct = deleteProuduct;
